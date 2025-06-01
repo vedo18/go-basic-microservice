@@ -1,0 +1,45 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Go workspace file (Go 1.18+)
+go.work
+go.work.sum
+
+# Dependency directories (for older Go versions or vendoring)
+vendor/
+
+# IDE/editor-specific files
+.idea/
+.vscode/
+*.swp
+
+# Logs
+*.log
+
+# Env and config files
+.env
+.env.*
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Compiled object files
+*.o
+*.a
+
+# Air live reload binary and config
+tmp/
+.air
+.air.toml
+
+# Node (if frontend involved)
+node_modules/
