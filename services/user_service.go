@@ -51,3 +51,20 @@ func CreateUser(user models.User) (models.User, error) {
 	}
 	return user, nil
 }
+
+func UpdateUser(id string, updatedData models.User) (models.User, error) {
+	intID, err := strconv.Atoi(id)
+	if err != nil {
+		return models.User{}, errors.New("invalid ID format")
+	}
+
+	query := `UPDATE users SET name = $1, email = $2 WHERE id = $3 RETURNING id, name, email`
+	var user models.User
+	err = config.DB.Get(&user, query, updatedData.Name, updatedData.Email, intID)
+	if err != nil {
+		log.Printf("❌ Error updating user with id %d: %v", intID, err)
+		return models.User{}, errors.New("failed to update user")
+	}
+
+	return user, nil
+}

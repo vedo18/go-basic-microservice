@@ -54,3 +54,36 @@ func CreateUser(c *gin.Context) {
 
 	utils.SendSuccess(c, http.StatusCreated, createdUser)
 }
+
+func UpdateUser(c *gin.Context) {
+	id := c.Param("id")
+
+	// Check if user exists
+	existingUser, err := services.GetUserById(id)
+	if err != nil {
+		utils.SendError(c, http.StatusNotFound, err.Error())
+		return
+	}
+
+	var updateData models.User
+	if err := c.ShouldBindJSON(&updateData); err != nil {
+		utils.SendError(c, http.StatusBadRequest, "Invalid JSON")
+		return
+	}
+
+	// Merge existing with new data
+	if updateData.Name == "" {
+		updateData.Name = existingUser.Name
+	}
+	if updateData.Email == "" {
+		updateData.Email = existingUser.Email
+	}
+
+	updatedUser, err := services.UpdateUser(id, updateData)
+	if err != nil {
+		utils.SendError(c, http.StatusInternalServerError, "Failed to update user")
+		return
+	}
+
+	utils.SendSuccess(c, http.StatusOK, updatedUser)
+}

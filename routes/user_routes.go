@@ -12,6 +12,6 @@ func RegisterUserRoutes(router *gin.Engine) {
 		userRoutes.GET("/", handlers.GetAllUsers)
 		userRoutes.GET("/:id", handlers.GetUserById)
 		userRoutes.POST("/", handlers.CreateUser)
-
+		userRoutes.PATCH("/:id", handlers.UpdateUser)
 	}
 }
